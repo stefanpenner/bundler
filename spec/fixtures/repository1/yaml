@@ -5610,6 +5610,61 @@ gems:
     summary: A gem that provides all of nothing (with a C extension!)
     test_files: []
     
+  very-simple-prerelease-1.0.pre: !ruby/object:Gem::Specification 
+    name: very-simple-prerelease
+    version: !ruby/object:Gem::Version 
+      version: 1.0.pre
+    platform: ruby
+    authors: 
+    - Emocow
+    autorequire: 
+    bindir: bin
+    cert_chain: []
+    
+    date: 2009-11-04 00:00:00 -08:00
+    default_executable: 
+    dependencies: []
+    
+    description: A gem that provides all of nothing
+    email: emocow@emocow.com
+    executables: []
+    
+    extensions: []
+    
+    extra_rdoc_files: []
+    
+    files: []
+    
+    has_rdoc: true
+    homepage: http://emocow.com
+    licenses: []
+    
+    post_install_message: 
+    rdoc_options: []
+    
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">"
+        - !ruby/object:Gem::Version 
+          version: 1.3.1
+      version: 
+    requirements: []
+    
+    rubyforge_project: 
+    rubygems_version: 1.3.5
+    signing_key: 
+    specification_version: 3
+    summary: A gem that provides all of nothing
+    test_files: []
+    
   webrat-0.4.4.racktest: !ruby/object:Gem::Specification 
     name: webrat
     version: !ruby/object:Gem::Version 
