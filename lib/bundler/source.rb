@@ -308,7 +308,7 @@ module Bundler
         FileUtils.mkdir_p(location.dirname)
 
         Bundler.logger.info "Cloning git repository at: #{@uri}"
-        `git clone #{@uri} #{location} --no-hardlinks`
+        `git clone #{@uri} #{location} --no-hardlinks --recursive`
 
         if @ref
           Dir.chdir(location) { `git checkout --quiet #{@ref}` }
