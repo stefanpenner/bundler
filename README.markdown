@@ -48,11 +48,20 @@ information, please refer to Bundler::ManifestBuilder.
     # it can be specified the same way as with rubygems' #gem method.
     gem "rack", "1.0.0"
 
+    # the require_as allows you to specify which file should be required when 
+    # the require_env is called. By default, it is the gem’s name
+    gem "rack_csrf", :require_as => "rack/csrf"
+
     # Specify a dependency rspec, but only require that gem in the "testing"
     # environment. :except is also a valid option to specify environment
     # restrictions.
     gem "rspec", :only => :testing
 
+    # blocks can also be used to batch assign gems to specific environments.
+    #
+    # You can use only or except in block mode to specify a number of gems at once
+    only :testing { gem "rspec" }   
+    
     # Specify a dependency, but specify that it is already present and expanded
     # at vendor/rspec. Bundler will treat rspec as though it was the rspec gem
     # for the purpose of gem resolution: if another gem depends on a version
@@ -72,13 +81,16 @@ information, please refer to Bundler::ManifestBuilder.
     # in the repository.
     gem "rails", "3.0.pre", :git => "git://github.com/rails/rails.git"
 
-    # Add http://gems.github.com as a source that the bundler will use
+    # Add http://gemcutter.org as a source that the bundler will use
     # to find gems listed in the manifest. By default,
     # http://gems.rubyforge.org is already added to the list.
     #
     # This is an optional setting.
-    source "http://gems.github.com"
+    source "http://gemcutter.org"
 
+    # Empties the list of gem sources to search inside of.
+    clear_sources
+    
     # Specify where the bundled gems should be stashed. This directory will
     # be a gem repository where all gems are downloaded to and installed to.
     #
@@ -221,7 +233,7 @@ located in `[bundle_path]/gems/environment.rb`. For example:
 
     ruby -r vendor/gems/environment.rb my_ruby_script.rb
 
-### Using Bundler with Rails today
+### Using Bundler with Rails 2.3.x
 
 It should be possible to use Bundler with Rails today. Here are the steps
 to follow.
@@ -243,9 +255,29 @@ to follow.
 
 * At the top of `config/preinitializer.rb`, add the following line:
 
-    require "#{RAILS_ROOT}/vendor/gems/environment"
+  require "#{File.dirname(__FILE__)}/../vendor/bundler_gems/environment"
+ 
+  class Rails::Boot
+    def run
+      load_initializer
+      extend_environment
+      Rails::Initializer.run(:set_load_path)
+    end
+ 
+    def extend_environment
+      Rails::Initializer.class_eval do
+        old_load = instance_method(:load_environment)
+        define_method(:load_environment) do
+          Bundler.require_env RAILS_ENV
+          old_load.bind(self).call
+        end
+      end
+    end
+  end  
 
-In theory, this should be enough to get going.
+It’s a bit ugly, but you can copy and paste that code and forget it. Astute readers will notice that we’re using vendor/bundler_gems/environment.rb. This is because Rails 2.3 attaches special, irrevocable meaning to vendor/gems. As a result, make sure to do the following in your Gemfile: bundle_path "vendor/bundler_gems".
+
+Gemcutter uses this setup and it’s working great for them.
 
 ## To require rubygems or not
 
