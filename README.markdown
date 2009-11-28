@@ -165,9 +165,9 @@ get the changes installed. This will only check the remote sources if your
 currently installed gems do not satisfy the `Gemfile`. If you want to force
 checking for updates on the remote sources, use the `--update` option.
 
-### Updating outdated gems
+### Listing outdated gems
     
-    gem bundle list_outdated
+    gem bundle --list-outdated
 
 ### Remote deploys
 
