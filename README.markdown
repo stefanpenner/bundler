@@ -73,10 +73,10 @@ information, please refer to Bundler::ManifestBuilder.
     # Bundler will also recursively search for *.gemspec, and assume that
     # gemspecs it finds represent gems that are rooted in the same directory
     # the gemspec is found in.
-    gem "rspec", "1.1.6", :vendored_at => "vendor/rspec"
+    gem "rspec", "1.1.6", :path => "vendor/rspec"
 
-    # Works exactly like :vendored_at, but first downloads the repo from
-    # git and handles stashing the files for you. As with :vendored_at,
+    # Works exactly like :path, but first downloads the repo from
+    # git and handles stashing the files for you. As with :path,
     # Bundler will automatically use *.gemspec files in the root or anywhere
     # in the repository.
     gem "rails", "3.0.pre", :git => "git://github.com/rails/rails.git"
