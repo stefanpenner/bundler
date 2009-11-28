@@ -81,6 +81,14 @@ information, please refer to Bundler::ManifestBuilder.
     # in the repository.
     gem "rails", "3.0.pre", :git => "git://github.com/rails/rails.git"
 
+    # To indicate that you want to use system gems for a particular dependency. 
+    # This will ensure that it gets resolved correctly during dependency resolution
+    # but does not need to be included in the bundle.
+    #
+    # When not specified the bundler defaults :bundle => true
+    gem "rails", :bundle => false
+
+
     # Add http://gemcutter.org as a source that the bundler will use
     # to find gems listed in the manifest. By default,
     # http://gems.rubyforge.org is already added to the list.
@@ -156,6 +164,10 @@ Every time an update is made to the manifest file, run `gem bundle` again to
 get the changes installed. This will only check the remote sources if your
 currently installed gems do not satisfy the `Gemfile`. If you want to force
 checking for updates on the remote sources, use the `--update` option.
+
+### Updating outdated gems
+    
+    gem bundle list_outdated
 
 ### Remote deploys
 
